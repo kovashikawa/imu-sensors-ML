@@ -89,6 +89,17 @@ python scripts/train_mlflow.py
 mlflow ui --port 5001
 ```
 
+## Model Performance
+
+The current model achieves the following performance metrics:
+
+| Metric | Training | Validation |
+|--------|----------|------------|
+| Accuracy | 82.50% | 79.73% |
+| Loss | 0.3286 | 0.3878 |
+
+These results demonstrate strong performance in distinguishing between fall and non-fall events, with good generalization from training to validation data.
+
 ## Troubleshooting
 
 - If you encounter issues with column names, check that the raw data columns can be properly mapped to the expected format (`acc_x`, `acc_y`, `acc_z`, `gyr_x`, `gyr_y`, `gyr_z`).
