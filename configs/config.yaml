@@ -1,0 +1,84 @@
+# File Paths
+data:
+  raw_dir: "data/01_raw"
+  intermediate_dir: "data/02_intermediate"
+  processed_dir: "data/03_processed"
+  external_dir: "data/04_external"
+
+output:
+  model_dir: "models"
+  log_file: "logs/fall_detection.log"
+
+# Data Loading
+data_loading:
+  excel_sheet_name: "SensorData"
+  categories: ['ADLs', 'Falls', 'Near_Falls']
+  subject_pattern: "sub*"
+  trial_pattern: "*_trial*.xlsx"
+
+# Target Column & Label Mapping
+target:
+  column_name: 'fall_label'
+  label_mapping:
+    'ADLs': 0
+    'Falls': 1
+    'Near_Falls': 0
+
+# Feature Engineering & Selection
+features:
+  selected_features:
+    - acc_x
+    - acc_y
+    - acc_z
+    - gyr_x
+    - gyr_y
+    - gyr_z
+    - acc_mag
+    - gyr_mag
+    # Statistical features (calculated in build_features.py)
+    - acc_mag_mean_5
+    - acc_mag_std_5
+    - gyr_mag_mean_5
+    - gyr_mag_std_5
+    # Motion intensity features
+    - motion_intensity
+    # Orientation features
+    - roll
+    - pitch
+
+# Preprocessing
+preprocessing:
+  sequence_length: 100
+  step: 50
+  test_size: 0.15
+  validation_size: 0.15
+  random_state: 42
+
+# Model Architecture
+model:
+  hidden_size: 64
+  num_layers: 2
+  dropout: 0.3
+
+# Training Configuration
+training:
+  num_epochs: 50
+  batch_size: 64
+  learning_rate: 0.001
+  optimizer: 'adam'
+  loss_function: 'binary_crossentropy'
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.2
+  min_lr: 1e-6
+
+# Experiment Tracking
+tracking:
+  use_mlflow: true
+  experiment_name: "fall_detection_lstm"
+  # mlflow_tracking_uri: 'http://localhost:5000'
+
+mlflow:
+  tracking_uri: "http://localhost:5001"  # MLflow tracking server URI
+  experiment_name: "fall-detection"      # Experiment name
+  model_registry_name: "fall-detection-models"  # Model registry name
