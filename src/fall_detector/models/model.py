@@ -14,6 +14,7 @@ class FallDetectionLSTM(nn.Module):
         num_layers: Number of LSTM layers
         dropout: Dropout probability
     """
+    # TODO: check the accuracy for each of the categories ADLs , Falls etc
     def __init__(self, input_size: int, hidden_size: int, num_layers: int, dropout: float):
         super().__init__()
         self.hidden_size = hidden_size
